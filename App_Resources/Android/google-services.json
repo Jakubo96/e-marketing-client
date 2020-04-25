@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "171261672286",
+    "firebase_url": "https://e-marketing-a7f9e.firebaseio.com",
+    "project_id": "e-marketing-a7f9e",
+    "storage_bucket": "e-marketing-a7f9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171261672286:android:9d4d883c480b7ed6e86dcf",
+        "android_client_info": {
+          "package_name": "org.nativescript.EMarketingClient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171261672286-49latjpmg0sg430hoc7kqej219leog30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB9hjVJ0OC2vfXGGOS9Ps7C-js6GpVjnM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171261672286-49latjpmg0sg430hoc7kqej219leog30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171261672286:android:de55659c478ffbb6e86dcf",
+        "android_client_info": {
+          "package_name": "org.nativescript.EMarketingMobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171261672286-49latjpmg0sg430hoc7kqej219leog30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB9hjVJ0OC2vfXGGOS9Ps7C-js6GpVjnM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171261672286-49latjpmg0sg430hoc7kqej219leog30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
