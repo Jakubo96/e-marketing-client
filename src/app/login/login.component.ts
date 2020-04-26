@@ -17,7 +17,12 @@ import { DeviceIdentifier } from 'app/login/device-identifier';
 })
 export class LoginComponent implements OnInit {
   private readonly nameControl = new FormControl('', Validators.required);
-  private readonly macControl = new FormControl('', Validators.required);
+  private readonly macControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(
+      /^([0-9A-F]{2}):([0-9A-F]{2}):([0-9A-F]{2}):([0-9A-F]{2}):([0-9A-F]{2}):([0-9A-F]{2})$/
+    ),
+  ]);
 
   private readonly USER_NAME_KEY = 'username';
   private readonly MAC_ADDRESS_KEY = 'macAddress';
