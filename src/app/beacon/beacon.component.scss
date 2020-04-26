@@ -7,3 +7,11 @@ StackLayout {
     width: 200;
   }
 }
+
+FlexboxLayout {
+  justify-content: center;
+
+  Button {
+    background-color: #ff0000;
+  }
+}

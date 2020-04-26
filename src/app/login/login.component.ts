@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import {
   getString,
   hasKey,
@@ -26,11 +26,7 @@ export class LoginComponent implements OnInit {
   private username: string;
   private macAddress: string;
 
-  constructor(
-    page: Page,
-    private readonly router: RouterExtensions,
-    private readonly fb: FormBuilder
-  ) {
+  constructor(page: Page, private readonly router: RouterExtensions) {
     page.actionBarHidden = true;
   }
 

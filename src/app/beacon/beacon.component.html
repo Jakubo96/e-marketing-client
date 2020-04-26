@@ -1,9 +1,18 @@
-<StackLayout>
-  <Label class="h1" [text]="'Hello: ' + username"></Label>
-  <Label
-    class="h3"
-    textWrap="true"
-    text="You app is currently waiting for new notifications"
-  ></Label>
-  <ActivityIndicator [busy]="true"></ActivityIndicator>
-</StackLayout>
+<GridLayout rows="8*, *" columns="*" class="m-y-30">
+  <StackLayout row="0" col="0">
+    <Label class="h1" [text]="'Hello: ' + username"></Label>
+    <Label
+      class="h3"
+      textWrap="true"
+      text="You app is currently waiting for new notifications"
+    ></Label>
+    <ActivityIndicator [busy]="true"></ActivityIndicator>
+  </StackLayout>
+  <FlexboxLayout row="1" col="0">
+    <Button
+      class="-primary -rounded-sm h2"
+      text="Logout"
+      (tap)="logout()"
+    ></Button>
+  </FlexboxLayout>
+</GridLayout>
