@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { FormControl, Validators } from '@angular/forms';
 import {
@@ -9,13 +9,16 @@ import {
 import { RouterExtensions } from 'nativescript-angular/router';
 import * as firebase from 'nativescript-plugin-firebase';
 import { DeviceIdentifier } from 'app/login/device-identifier';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { HttpWrapperService } from 'app/http-wrapper.service';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'ns-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   private readonly nameControl = new FormControl('', Validators.required);
   private readonly macControl = new FormControl('', [
     Validators.required,
@@ -23,15 +26,18 @@ export class LoginComponent implements OnInit {
       /^([0-9A-F]{2}):([0-9A-F]{2}):([0-9A-F]{2}):([0-9A-F]{2}):([0-9A-F]{2}):([0-9A-F]{2})$/
     ),
   ]);
-
   private readonly USER_NAME_KEY = 'username';
-  private readonly MAC_ADDRESS_KEY = 'macAddress';
 
+  private readonly MAC_ADDRESS_KEY = 'macAddress';
   private pushToken: string;
+
   private username: string;
   private macAddress: string;
-
-  constructor(page: Page, private readonly router: RouterExtensions) {
+  constructor(
+    page: Page,
+    private readonly router: RouterExtensions,
+    private readonly httpWrapper: HttpWrapperService
+  ) {
     page.actionBarHidden = true;
   }
 
@@ -39,6 +45,9 @@ export class LoginComponent implements OnInit {
     this.navigateIfIsLoggedIn();
     this.getFirebasePushToken();
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public ngOnDestroy(): void {}
 
   public submit(): void {
     this.username = this.nameControl.value;
@@ -48,19 +57,12 @@ export class LoginComponent implements OnInit {
     setString(this.MAC_ADDRESS_KEY, this.macAddress);
 
     this.sendUserData();
-    this.router.navigate(['/beacon'], {
-      queryParams: { username: this.username },
-    });
   }
 
   private navigateIfIsLoggedIn(): void {
     if (this.isLoggedIn) {
       this.username = getString(this.USER_NAME_KEY);
       this.macAddress = getString(this.MAC_ADDRESS_KEY);
-
-      this.router.navigate(['/beacon'], {
-        queryParams: { username: this.username },
-      });
     }
   }
 
@@ -75,11 +77,17 @@ export class LoginComponent implements OnInit {
 
     const deviceIdentifier: DeviceIdentifier = {
       username: this.username,
-      macAddress: this.macAddress,
+      mac: this.macAddress,
       pushToken: this.pushToken,
     };
     // eslint-disable-next-line no-console
     console.log(deviceIdentifier);
+
+    this.httpWrapper.login(deviceIdentifier).subscribe(() =>
+      this.router.navigate(['/beacon'], {
+        queryParams: { username: this.username, mac: this.macAddress },
+      })
+    );
   }
 
   private getFirebasePushToken(): void {

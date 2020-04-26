@@ -1,5 +1,5 @@
 export interface DeviceIdentifier {
   username: string;
-  macAddress: string;
+  mac: string;
   pushToken: string;
 }
