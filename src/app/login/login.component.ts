@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private username: string;
   private macAddress: string;
+
   constructor(
     page: Page,
     private readonly router: RouterExtensions,
@@ -57,12 +58,20 @@ export class LoginComponent implements OnInit, OnDestroy {
     setString(this.MAC_ADDRESS_KEY, this.macAddress);
 
     this.sendUserData();
+
+    this.router.navigate(['/beacon'], {
+      queryParams: { username: this.username, mac: this.macAddress },
+    });
   }
 
   private navigateIfIsLoggedIn(): void {
     if (this.isLoggedIn) {
       this.username = getString(this.USER_NAME_KEY);
       this.macAddress = getString(this.MAC_ADDRESS_KEY);
+
+      this.router.navigate(['/beacon'], {
+        queryParams: { username: this.username, mac: this.macAddress },
+      });
     }
   }
 
@@ -80,14 +89,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       mac: this.macAddress,
       pushToken: this.pushToken,
     };
-    // eslint-disable-next-line no-console
-    console.log(deviceIdentifier);
 
-    this.httpWrapper.login(deviceIdentifier).subscribe(() =>
-      this.router.navigate(['/beacon'], {
-        queryParams: { username: this.username, mac: this.macAddress },
-      })
-    );
+    this.httpWrapper.login(deviceIdentifier).subscribe();
   }
 
   private getFirebasePushToken(): void {
