@@ -1,7 +1,19 @@
-<ActionBar>
-    <Label text="Home"></Label>
-</ActionBar>
-
-<GridLayout>
-    <!-- Add your page content here -->
-</GridLayout>
+<StackLayout>
+  <FlexboxLayout>
+    <Label text="Name" class="h1"></Label>
+  </FlexboxLayout>
+  <FlexboxLayout>
+    <TextField
+      [formControl]="nameControl"
+      class="h3"
+      hint="Enter your name"
+    ></TextField>
+  </FlexboxLayout>
+  <FlexboxLayout>
+    <Button
+      class="-primary -rounded-lg h2"
+      text="Login"
+      [isEnabled]="nameControl.valid"
+    ></Button>
+  </FlexboxLayout>
+</StackLayout>

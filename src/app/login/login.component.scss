@@ -1,0 +1,16 @@
+StackLayout {
+  vertical-align: center;
+
+  FlexboxLayout {
+    justify-content: center;
+
+    TextField {
+      height: 50;
+      margin-bottom: 20;
+    }
+
+    Button {
+      width: 150;
+    }
+  }
+}
