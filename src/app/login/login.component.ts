@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
   private readonly MAC_ADDRESS_KEY = 'macAddress';
 
   private pushToken: string;
+  private username: string;
+  private macAddress: string;
 
   constructor(
     page: Page,
@@ -33,44 +35,56 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.navigateIfIsLoggedIn();
     this.getFirebasePushToken();
-    this.checkIfIsLoggedIn();
   }
 
   public submit(): void {
-    const username: string = this.nameControl.value;
-    const macAddress: string = this.macControl.value;
+    this.username = this.nameControl.value;
+    this.macAddress = this.macControl.value;
 
-    setString(this.USER_NAME_KEY, username);
-    setString(this.MAC_ADDRESS_KEY, macAddress);
+    setString(this.USER_NAME_KEY, this.username);
+    setString(this.MAC_ADDRESS_KEY, this.macAddress);
 
-    this.sendUserData(username, macAddress);
+    this.sendUserData();
+    this.router.navigate(['/beacon'], {
+      queryParams: { username: this.username },
+    });
   }
 
-  private checkIfIsLoggedIn(): void {
-    if (hasKey(this.USER_NAME_KEY) && hasKey(this.MAC_ADDRESS_KEY)) {
-      const username: string = getString(this.USER_NAME_KEY);
-      const macAddress: string = getString(this.MAC_ADDRESS_KEY);
+  private navigateIfIsLoggedIn(): void {
+    if (this.isLoggedIn) {
+      this.username = getString(this.USER_NAME_KEY);
+      this.macAddress = getString(this.MAC_ADDRESS_KEY);
 
-      this.sendUserData(username, macAddress);
-      this.router.navigate(['/beacon'], { queryParams: { username } });
+      this.router.navigate(['/beacon'], {
+        queryParams: { username: this.username },
+      });
     }
   }
 
-  private sendUserData(username: string, macAddress: string): void {
+  private get isLoggedIn(): boolean {
+    return hasKey(this.USER_NAME_KEY) && hasKey(this.MAC_ADDRESS_KEY);
+  }
+
+  private sendUserData(): void {
+    if (!this.isLoggedIn) {
+      return;
+    }
+
     const deviceIdentifier: DeviceIdentifier = {
-      username,
-      macAddress,
+      username: this.username,
+      macAddress: this.macAddress,
       pushToken: this.pushToken,
     };
+    // eslint-disable-next-line no-console
     console.log(deviceIdentifier);
   }
 
   private getFirebasePushToken(): void {
     firebase.addOnPushTokenReceivedCallback((token) => {
       this.pushToken = token;
-      // eslint-disable-next-line no-console
-      console.log(token);
+      this.sendUserData();
     });
   }
 }
