@@ -6,6 +6,7 @@ import {
   setString,
   getString,
 } from 'tns-core-modules/application-settings';
+import { RouterExtensions } from 'nativescript-angular/router';
 
 @Component({
   selector: 'ns-login',
@@ -16,8 +17,8 @@ export class LoginComponent implements OnInit {
   private readonly nameControl = new FormControl('', Validators.required);
   private readonly USER_NAME_KEY = 'username';
 
-  constructor(private readonly page: Page) {
-    this.page.actionBarHidden = true;
+  constructor(page: Page, private readonly router: RouterExtensions) {
+    page.actionBarHidden = true;
   }
 
   public ngOnInit(): void {
@@ -25,15 +26,17 @@ export class LoginComponent implements OnInit {
   }
 
   public submit(): void {
-    const username = this.nameControl.value;
+    const username: string = this.nameControl.value;
     setString(this.USER_NAME_KEY, username);
-    // send request to BE
+    this.sendUserData(username);
   }
 
   private checkIfIsLoggedIn(): void {
     if (hasKey(this.USER_NAME_KEY)) {
       const username = getString(this.USER_NAME_KEY);
-      console.log(username);
+      this.router.navigate(['/beacon'], { queryParams: { username } });
     }
   }
+
+  private sendUserData(username: string) {}
 }
