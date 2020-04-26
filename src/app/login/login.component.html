@@ -9,11 +9,25 @@
       hint="Enter your name"
     ></TextField>
   </FlexboxLayout>
+
+  <StackLayout class="hr"></StackLayout>
+
+  <FlexboxLayout>
+    <Label text="MAC address" class="h1"></Label>
+  </FlexboxLayout>
+  <FlexboxLayout>
+    <TextField
+      [formControl]="macControl"
+      class="h3"
+      hint="Enter your MAC address"
+    ></TextField>
+  </FlexboxLayout>
+
   <FlexboxLayout>
     <Button
       class="-primary -rounded-lg h2"
       text="Login"
-      [isEnabled]="nameControl.valid"
+      [isEnabled]="nameControl.valid && macControl.valid"
       (tap)="submit()"
     ></Button>
   </FlexboxLayout>
