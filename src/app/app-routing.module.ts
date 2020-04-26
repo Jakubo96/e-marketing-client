@@ -10,6 +10,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('app/login/login.module').then((m) => m.LoginModule),
   },
+  {
+    path: 'beacon',
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    loadChildren: () =>
+      import('app/beacon/beacon.module').then((m) => m.BeaconModule),
+  },
 ];
 
 @NgModule({
