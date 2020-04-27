@@ -1,13 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { ActivatedRoute } from '@angular/router';
-import * as firebase from 'nativescript-plugin-firebase';
-import { Message } from 'nativescript-plugin-firebase';
-import { TNSFancyAlert } from 'nativescript-fancyalert';
 import { remove } from 'tns-core-modules/application-settings';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { HttpWrapperService } from 'app/http-wrapper.service';
+import { NotificationsService } from 'app/beacon/notifications.service';
 
 @AutoUnsubscribe()
 @Component({
@@ -26,14 +24,14 @@ export class BeaconComponent implements OnInit, OnDestroy {
     page: Page,
     private readonly route: ActivatedRoute,
     private readonly router: RouterExtensions,
-    private readonly httpWrapper: HttpWrapperService
+    private readonly httpWrapper: HttpWrapperService,
+    private readonly notificationsService: NotificationsService
   ) {
     page.actionBarHidden = true;
   }
 
   public ngOnInit(): void {
     this.retrieveUsernameAndMac();
-    this.setupFirebaseCallbacks();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -49,13 +47,5 @@ export class BeaconComponent implements OnInit, OnDestroy {
   private retrieveUsernameAndMac(): void {
     this.username = this.route.snapshot.queryParams.username;
     this.mac = this.route.snapshot.queryParams.mac;
-  }
-
-  private setupFirebaseCallbacks(): void {
-    firebase.addOnMessageReceivedCallback((message: Message) => {
-      if (message.foreground) {
-        TNSFancyAlert.showInfo(message.title, message.body);
-      }
-    });
   }
 }
