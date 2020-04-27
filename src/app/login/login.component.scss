@@ -1,4 +1,4 @@
-StackLayout {
+.main-container {
   vertical-align: center;
 
   FlexboxLayout {
@@ -8,8 +8,10 @@ StackLayout {
       margin-bottom: 20;
     }
 
-    Button {
+    .submit-button {
       width: 150;
+      font-size: 22sp;
+      height: 60;
     }
   }
 }

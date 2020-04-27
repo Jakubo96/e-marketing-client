@@ -1,16 +1,19 @@
 <GridLayout rows="8*, *" columns="*" class="p-y-30">
-  <StackLayout row="0" col="0">
+  <StackLayout row="0" col="0" class="acticity-container">
     <Label class="h1" [text]="'Hello ' + username"></Label>
     <Label
       class="h3"
       textWrap="true"
       text="You app is currently waiting for new notifications"
     ></Label>
-    <ActivityIndicator [busy]="true"></ActivityIndicator>
+    <ActivityIndicator
+      class="activity-indicator"
+      [busy]="true"
+    ></ActivityIndicator>
   </StackLayout>
-  <FlexboxLayout row="1" col="0">
+  <FlexboxLayout class="button-container" row="1" col="0">
     <Button
-      class="-primary -rounded-sm h2"
+      class="-primary -rounded-lg logout-button"
       text="Logout"
       (tap)="logout()"
     ></Button>

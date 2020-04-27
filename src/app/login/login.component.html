@@ -1,4 +1,4 @@
-<StackLayout>
+<StackLayout class="main-container">
   <FlexboxLayout>
     <Label text="Name" class="h1"></Label>
   </FlexboxLayout>
@@ -25,7 +25,7 @@
 
   <FlexboxLayout>
     <Button
-      class="-primary -rounded-lg h2"
+      class="-primary -rounded-lg submit-button"
       text="Login"
       [isEnabled]="nameControl.valid && macControl.valid"
       (tap)="submit()"

@@ -1,17 +1,20 @@
-StackLayout {
+.acticity-container {
   vertical-align: center;
   text-align: center;
 
-  ActivityIndicator {
+  .activity-indicator {
     height: 200;
     width: 200;
   }
 }
 
-FlexboxLayout {
+.button-container {
   justify-content: center;
 
-  Button {
+  .logout-button {
     background-color: #ff0000;
+    font-size: 22sp;
+    height: 60;
+    width: 150;
   }
 }
